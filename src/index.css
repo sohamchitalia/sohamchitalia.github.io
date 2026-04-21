@@ -50,7 +50,8 @@ nav.scrolled { background: #faf8f4ee; backdrop-filter: blur(12px); padding: 14px
 .hero-photo-wrap {
   position: absolute;
   right: 10vw;
-  bottom: 0;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 1;
   width: clamp(220px, 28vw, 420px);
   pointer-events: none;
@@ -61,9 +62,9 @@ nav.scrolled { background: #faf8f4ee; backdrop-filter: blur(12px); padding: 14px
   display: block;
   object-fit: cover;
   object-position: top;
-  border-radius: 4px 4px 0 0;
-  mask-image: linear-gradient(to top, transparent 0%, black 30%);
-  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%);
+  border-radius: 4px;
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
 
 /* Section commons */
