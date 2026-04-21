@@ -17,13 +17,34 @@ function ContactForm() {
     return e
   }
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
     setErrors({})
     setStatus('sending')
-    setTimeout(() => setStatus('sent'), 1400)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '0957afd0-4b58-4245-bb7c-705671fd101b',
+          name: fields.name,
+          email: fields.email,
+          message: fields.message,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setStatus('sent')
+      } else {
+        setStatus('idle')
+        setErrors({ message: 'Something went wrong. Please try again.' })
+      }
+    } catch {
+      setStatus('idle')
+      setErrors({ message: 'Something went wrong. Please try again.' })
+    }
   }
 
   const set = (k: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
